@@ -1,0 +1,8 @@
+node_modules
+.git
+.context
+.env*
+data
+dist
+.wrangler
+*.tsbuildinfo

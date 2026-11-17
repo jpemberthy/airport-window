@@ -1,0 +1,956 @@
+/* Phone-only presentation. Desktop and the isolated design lab keep their styles. */
+.phone-only {
+  display: none;
+}
+
+/* Keep in sync with usePhoneLayout, including short landscape phones. */
+@media (max-width: 760px), (max-width: 960px) and (max-height: 500px) {
+  .observatory {
+    --phone-muted: #a2acc5;
+    --phone-border: #303954;
+    --phone-teal: #a5e9e5;
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+    padding: env(safe-area-inset-top, 0px) 0
+      calc(120px + env(safe-area-inset-bottom, 0px));
+    background:
+      radial-gradient(ellipse at 0 5%, #18334466, transparent 42%), #090d20;
+    color: #f0f0f7;
+  }
+  .observatory .site-header,
+  .observatory .intro,
+  .observatory .section-title,
+  .observatory .observer-bar,
+  .observatory .below-cards,
+  .observatory .soundbar {
+    display: none;
+  }
+  .observatory .phone-only {
+    display: block;
+  }
+  .observatory .phone-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px max(16px, env(safe-area-inset-right, 0px)) 8px
+      max(16px, env(safe-area-inset-left, 0px));
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  .phone-header h1 {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    font-size: 22px;
+    letter-spacing: -0.06em;
+    line-height: 1;
+  }
+  .phone-header h1 > span:first-child {
+    color: #e8a0d5;
+    margin-right: 7px;
+    font-size: 25px;
+    font-weight: 400;
+  }
+  .phone-period {
+    color: #e8a0d5;
+  }
+  .observatory button {
+    -webkit-tap-highlight-color: transparent;
+  }
+  .phone-icon-button {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    padding: 0;
+    border: 1px solid var(--phone-border);
+    border-radius: 12px;
+    background: #171d32;
+    color: inherit;
+  }
+  .phone-header > .phone-icon-button {
+    background: transparent;
+    border-color: transparent;
+  }
+  .phone-weather {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    margin-left: auto;
+    padding: 0 6px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-align: left;
+  }
+  .phone-weather strong {
+    display: block;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 1.1;
+  }
+  .phone-weather small {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: 3px;
+    font-size: 10px;
+    color: var(--phone-muted);
+  }
+  .phone-weather > svg {
+    color: var(--phone-teal);
+  }
+  .observatory .page-body {
+    width: 100%;
+    max-width: 600px;
+    min-height: 0;
+    margin: 0 auto;
+    padding: 0 max(16px, env(safe-area-inset-right, 0px)) 0
+      max(16px, env(safe-area-inset-left, 0px));
+  }
+  .observatory .flight-grid {
+    position: relative;
+    inset: auto;
+    display: block;
+    margin: 0;
+    border: 1px solid #52607b;
+    border-radius: 5px;
+    overflow: hidden;
+    background: #12172f;
+  }
+  .observatory .phone-view-trigger {
+    position: absolute;
+    z-index: 4;
+    left: 12px;
+    top: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+    padding: 0 12px;
+    border: 1px solid #b1d4dc80;
+    border-radius: 22px;
+    background: #0c172bd9;
+    color: #d9efed;
+    backdrop-filter: blur(8px);
+    font-size: 11px;
+  }
+  .observatory .moment-card {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+  }
+  .observatory .moment-card:hover {
+    transform: none;
+    box-shadow: none;
+  }
+  .observatory .moment-card .card-artwork {
+    position: relative;
+    inset: auto;
+    height: clamp(176px, min(66vw, 32svh), 280px);
+    min-height: 0;
+    border-bottom: 1px solid var(--phone-border);
+  }
+  .observatory .art-topline {
+    display: flex;
+    top: 12px;
+    left: 14px;
+    right: 14px;
+    justify-content: flex-end;
+    min-height: 44px;
+  }
+  .observatory .scene-number {
+    display: none;
+  }
+  .observatory .scene-tag {
+    font-size: 9px;
+    padding: 6px 8px;
+    max-width: calc(100% - 132px);
+    letter-spacing: 0.06em;
+  }
+  .observatory .moment-card .card-content {
+    position: relative;
+    inset: auto;
+    min-height: 0;
+    padding: 16px 16px 14px;
+    background: transparent;
+  }
+  .observatory .moment-card .card-heading {
+    align-items: center;
+    width: 100%;
+  }
+  .observatory .moment-card .card-heading h2 {
+    font-size: 32px;
+    letter-spacing: -0.065em;
+    text-shadow: none;
+  }
+  .observatory .flight-count {
+    align-self: center;
+    padding: 0;
+    font-size: 11px;
+    color: var(--phone-muted);
+  }
+  .observatory .flight-count span {
+    display: none;
+  }
+  .observatory .moment-card .card-flight-area {
+    width: 100%;
+    flex: none;
+    min-height: 0;
+  }
+  .observatory .flight-identity {
+    border: 0;
+    padding: 12px 0;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .observatory .airline-mark {
+    width: 30px;
+    height: 30px;
+    font-size: 16px;
+    margin-top: 2px;
+  }
+  .observatory .moment-card .flight-copy strong {
+    font-size: 18px;
+    line-height: 1.25;
+    font-weight: 550;
+    white-space: normal;
+    overflow: visible;
+    overflow-wrap: anywhere;
+  }
+  .observatory .flight-copy span {
+    white-space: normal;
+    overflow: visible;
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .observatory .flight-copy .flight-route {
+    color: #f0cda4;
+    font-size: 13px;
+  }
+  .observatory .flight-route small {
+    display: block;
+    margin: 3px 0 0;
+    font-size: 10px;
+    color: var(--phone-muted);
+  }
+  .observatory .flight-copy .nearby-distance {
+    color: var(--phone-teal);
+  }
+  .observatory .round-action,
+  .observatory .moment-card .card-bottom {
+    display: none;
+  }
+  .observatory .flight-meta {
+    gap: 8px;
+    padding-top: 10px;
+    border-color: var(--phone-border);
+  }
+  .observatory .flight-meta span {
+    font-size: 9px;
+    letter-spacing: 0.04em;
+    color: var(--phone-muted);
+  }
+  .observatory .flight-meta strong {
+    font-size: 12px;
+    margin-top: 4px;
+  }
+  .observatory .flight-empty {
+    margin-top: 12px;
+    border-color: var(--phone-border);
+  }
+  .observatory .flight-empty span {
+    line-height: 1.5;
+    font-size: 12px;
+  }
+  .observatory .flight-empty strong {
+    font-size: 16px;
+  }
+  .observatory .phone-flight-actions {
+    display: grid;
+    grid-template-columns: 1fr 1.35fr 1fr;
+    border-top: 1px solid var(--phone-border);
+    padding: 4px 6px;
+    gap: 2px;
+  }
+  .phone-flight-actions button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    min-height: 44px;
+    padding: 4px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    font-size: 11px;
+    color: var(--phone-muted);
+  }
+  .phone-flight-actions button:nth-child(2) {
+    color: var(--phone-teal);
+  }
+  .phone-footnotes {
+    padding: 4px 2px 0;
+    color: var(--phone-muted);
+    font-size: 11px;
+    line-height: 1.5;
+  }
+  .phone-nearby-empty {
+    margin: 6px 0 0;
+  }
+  .phone-sources a {
+    display: inline-flex;
+    min-width: 44px;
+    min-height: 44px;
+    align-items: center;
+  }
+  .phone-footer-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .phone-sources {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-right: auto;
+    min-width: 0;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+  .phone-sources a,
+  .phone-footnotes button {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 44px;
+    flex-shrink: 0;
+    padding: 0 2px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    text-decoration: none;
+    font-size: inherit;
+  }
+  .phone-recent-count {
+    display: grid;
+    place-items: center;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: #222a40;
+    color: #cad3e4;
+    font-size: 10px;
+  }
+  .observatory .phone-feed-note {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin: 0 0 10px;
+    font-size: 12px;
+    line-height: 1.5;
+    color: #f0cda4;
+  }
+  .observatory .phone-dock {
+    position: fixed;
+    z-index: 20;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 12px max(12px, env(safe-area-inset-right, 0px))
+      calc(12px + env(safe-area-inset-bottom, 0px))
+      max(12px, env(safe-area-inset-left, 0px));
+    border-top: 1px solid #58647c;
+    background: #10152bf5;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 -12px 32px #03071766;
+  }
+  .phone-dock-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr 44px;
+    gap: 8px;
+    max-width: 568px;
+    margin: 0 auto;
+  }
+  .phone-dock-controls > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 6px;
+    border: 1px solid var(--phone-border);
+    border-radius: 9px;
+    background: #192237;
+    color: inherit;
+    font-size: 12px;
+    text-align: left;
+  }
+  .phone-dock-controls svg {
+    color: var(--phone-teal);
+    flex-shrink: 0;
+  }
+  .phone-dock-controls small {
+    display: block;
+    margin-top: 3px;
+    font-size: 10px;
+    color: var(--phone-muted);
+  }
+  .phone-dock-controls > .active {
+    border-color: #9ed4cf;
+    background: #25464a;
+  }
+  .phone-audio-error {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 568px;
+    margin: 0 auto 8px;
+    color: #f0cda4;
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .phone-audio-error > span {
+    flex: 1;
+  }
+  .phone-audio-error button {
+    min-width: 44px;
+    min-height: 44px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font-size: 22px;
+  }
+  .observatory .recent-nearby {
+    display: none;
+  }
+  .phone-history button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    width: 100%;
+    min-height: 56px;
+    padding: 16px 0;
+    border: 0;
+    border-bottom: 1px solid var(--phone-border);
+    background: transparent;
+    color: inherit;
+    text-align: left;
+  }
+  .phone-history strong {
+    display: block;
+    font-size: 15px;
+    font-weight: 500;
+    overflow-wrap: anywhere;
+  }
+  .phone-history small {
+    display: block;
+    margin-top: 6px;
+    color: var(--phone-muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .phone-history svg {
+    flex-shrink: 0;
+    color: var(--phone-teal);
+  }
+  .phone-sheet .creator-byline {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 0 0 10px;
+    color: #e8a0d5;
+    font-size: 14px;
+  }
+  .phone-sheet .creator-byline a {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-height: 44px;
+    text-decoration: none;
+  }
+  .observatory .tv-globe {
+    position: static;
+    width: 200px;
+    margin: 20px auto;
+  }
+  .observatory .tv-globe .globe-kicker {
+    display: block;
+    font-size: 10px;
+  }
+  .observatory .tv-globe figcaption {
+    font-size: 13px;
+  }
+  .observatory .tv-globe figcaption small {
+    display: block;
+    font-size: 11px;
+  }
+  .observatory .phone-sheet {
+    position: fixed;
+    inset: auto 0 0;
+    width: min(100%, 600px);
+    max-width: 100%;
+    max-height: calc(100dvh - 24px - env(safe-area-inset-top, 0px));
+    margin: 0 auto;
+    padding: 0;
+    border: 1px solid #53607a;
+    border-bottom: 0;
+    border-radius: 22px 22px 0 0;
+    background: #14192f;
+    color: #f0f0f7;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-shadow: 0 -16px 70px #02061488;
+  }
+  .phone-sheet::backdrop {
+    background: #040717a3;
+    backdrop-filter: blur(5px);
+  }
+  .phone-sheet-inner {
+    padding: 0 24px calc(28px + env(safe-area-inset-bottom, 0px));
+  }
+  .phone-sheet-top {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin: 0 -24px 12px;
+    padding: 12px 20px 8px;
+    background: #14192f;
+  }
+  .phone-sheet-top > span {
+    color: var(--phone-muted);
+    font:
+      10px var(--font-geist-mono),
+      monospace;
+    letter-spacing: 0.06em;
+  }
+  .observatory .phone-sheet .modal-close {
+    position: static;
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+    border: 0;
+    border-radius: 50%;
+    background: #20263d;
+  }
+  .observatory .phone-sheet h2 {
+    font-size: 30px;
+    line-height: 1.15;
+    margin: 8px 0 12px;
+    overflow-wrap: anywhere;
+  }
+  .phone-sheet p {
+    line-height: 1.65;
+  }
+  .phone-sheet .modal-note {
+    font-size: 13px;
+    color: var(--phone-muted);
+  }
+  .phone-sheet .modal-route {
+    flex-wrap: wrap;
+    gap: 8px;
+    font-size: 17px;
+    overflow-wrap: anywhere;
+  }
+  .phone-sheet .modal-airline {
+    overflow-wrap: anywhere;
+  }
+  .observatory .phone-sheet .arcade-globe {
+    float: none;
+    display: block;
+    width: min(240px, 100%);
+    margin: 20px auto;
+  }
+  .phone-sheet .modal-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .phone-sheet .modal-stats strong {
+    overflow-wrap: anywhere;
+  }
+  .phone-sheet .modal-kicker a,
+  .phone-sheet .phone-official,
+  .phone-options > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 44px;
+  }
+  .phone-options button {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 72px;
+    padding: 18px 0;
+    border: 0;
+    border-bottom: 1px solid var(--phone-border);
+    text-align: left;
+    background: transparent;
+    color: inherit;
+    font-size: 15px;
+  }
+  .phone-options button > svg {
+    flex-shrink: 0;
+    color: var(--phone-teal);
+  }
+  .phone-options button > span:first-of-type {
+    flex: 1;
+  }
+  .phone-options small {
+    display: block;
+    margin-top: 6px;
+    color: var(--phone-muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .phone-options > a,
+  .phone-official {
+    color: #e8a0d5;
+    font-size: 13px;
+  }
+  .phone-volume {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 18px 0;
+    color: var(--phone-muted);
+    font-size: 13px;
+  }
+  .phone-volume input {
+    width: 100%;
+    height: 44px;
+    accent-color: var(--phone-teal);
+  }
+  .phone-weather-detail {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    color: var(--phone-teal);
+  }
+  .phone-weather-detail strong {
+    font-size: 48px;
+    font-weight: 450;
+  }
+  .phone-sheet .viewpoint-fields {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .phone-sheet .viewpoint-fields input {
+    width: 100%;
+    min-width: 0;
+    min-height: 44px;
+    font-size: 16px;
+  }
+  .phone-sheet .viewpoint-locate,
+  .phone-sheet .viewpoint-save,
+  .phone-sheet .viewpoint-forget {
+    min-height: 44px;
+  }
+  .observatory:has(.phone-audio-error) {
+    padding-bottom: calc(220px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Explicit TV mode is an immersive scene, not the normal phone card.
+     Keep controls in flow so safe areas, audio errors and long flight names
+     can grow the page on short screens instead of covering its content. */
+  .observatory.presentation-mode {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    height: auto;
+    min-height: 100dvh;
+    padding: env(safe-area-inset-top, 0px) 0 0;
+    overflow: visible;
+  }
+  .observatory.presentation-mode::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      180deg,
+      #050b20c9,
+      #050b2033 23%,
+      #050b2033 38%,
+      #050b20c9 68%,
+      #050b20f5
+    );
+  }
+  .observatory.presentation-mode .phone-header {
+    position: sticky;
+    top: 0;
+    z-index: 12;
+    max-width: none;
+    gap: 7px;
+  }
+  .observatory.presentation-mode .phone-weather {
+    min-width: 0;
+    flex: 0 0 auto;
+    padding-inline: 4px;
+    margin-left: auto;
+  }
+  .observatory.presentation-mode .phone-weather small {
+    display: none;
+  }
+  .observatory.presentation-mode .harbor-shortcut-compact {
+    min-height: 44px;
+    padding: 0 7px;
+    gap: 4px;
+    font-size: 11px;
+  }
+  .observatory.presentation-mode .harbor-shortcut-compact svg {
+    display: none;
+  }
+  .phone-header .phone-tv-exit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    width: auto;
+    flex-basis: auto;
+    padding: 0 8px;
+    background: #0c172bbf;
+    border-color: #b1d4dc60;
+    font-size: 11px;
+    white-space: nowrap;
+  }
+  .observatory.presentation-mode .page-body {
+    position: static;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    max-width: none;
+    padding-top: 16px;
+  }
+  .observatory.presentation-mode .flight-grid,
+  .observatory.presentation-mode .moment-card {
+    position: static;
+    height: auto;
+    overflow: visible;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+  .observatory.presentation-mode .flight-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto 1fr auto;
+    gap: 0;
+    flex: 1;
+  }
+  .observatory.presentation-mode .moment-card {
+    grid-column: 1;
+    grid-row: 2;
+    align-self: end;
+    min-width: 0;
+  }
+  .observatory.presentation-mode .moment-card .card-artwork {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .observatory.presentation-mode .art-topline,
+  .observatory.presentation-mode .flight-meta {
+    display: none;
+  }
+  .observatory.presentation-mode .phone-view-trigger {
+    top: calc(72px + env(safe-area-inset-top, 0px));
+    left: max(16px, env(safe-area-inset-left, 0px));
+  }
+  .observatory.presentation-mode .moment-card .card-content {
+    position: relative;
+    inset: auto;
+    padding: 16px 0 8px;
+    background: transparent;
+    text-shadow: 0 2px 12px #030718;
+  }
+  .observatory.presentation-mode .moment-card .card-heading h2 {
+    font-size: clamp(40px, 10vw, 60px);
+    text-shadow: inherit;
+  }
+  .observatory.presentation-mode .moment-card .card-heading {
+    max-width: none;
+  }
+  .observatory.presentation-mode .flight-identity {
+    padding: 10px 0;
+  }
+  .observatory.presentation-mode .phone-flight-actions,
+  .observatory.presentation-mode .phone-footnotes,
+  .observatory.presentation-mode .phone-feed-note {
+    position: relative;
+    z-index: 10;
+  }
+  .observatory.presentation-mode .phone-flight-actions {
+    grid-column: 1 / -1;
+    grid-row: 3;
+    background: #0c172b80;
+    border: 1px solid #b1d4dc40;
+    border-radius: 10px;
+  }
+  .observatory.presentation-mode .phone-feed-note {
+    margin-bottom: 0;
+    padding: 8px 0 0;
+  }
+  .observatory.presentation-mode .tv-globe {
+    position: relative;
+    z-index: 10;
+    inset: auto;
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: end;
+    align-self: start;
+    width: clamp(112px, 30vw, 150px);
+    margin: 0;
+    text-shadow: 0 2px 6px #030718;
+  }
+  .observatory.presentation-mode .tv-globe .globe-kicker {
+    font-size: 8px;
+  }
+  .observatory.presentation-mode .tv-globe figcaption {
+    font-size: 11px;
+  }
+  .observatory.presentation-mode .tv-globe figcaption small {
+    font-size: 9px;
+  }
+  .observatory.presentation-mode .phone-dock {
+    position: sticky;
+    background: #10152bbf;
+    border-top-color: #b1d4dc40;
+    box-shadow: none;
+  }
+  .observatory.presentation-mode.airspace-active {
+    height: 100dvh;
+    min-height: 100dvh;
+    overflow: hidden;
+  }
+  .observatory.presentation-mode .living-airspace {
+    position: fixed;
+  }
+  .observatory.presentation-mode .airspace-heading {
+    top: calc(72px + env(safe-area-inset-top, 0px));
+    left: max(16px, env(safe-area-inset-left, 0px));
+    right: max(16px, env(safe-area-inset-right, 0px));
+    gap: 6px;
+  }
+  .observatory.presentation-mode .airspace-heading strong {
+    max-width: 13ch;
+    font-size: clamp(34px, 11vw, 52px);
+  }
+  .observatory.presentation-mode .airspace-heading > span,
+  .observatory.presentation-mode .airspace-heading small {
+    font-size: 9px;
+  }
+  .observatory.presentation-mode .airspace-summary {
+    left: max(16px, env(safe-area-inset-left, 0px));
+    right: max(16px, env(safe-area-inset-right, 0px));
+    bottom: calc(86px + env(safe-area-inset-bottom, 0px));
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 14px;
+    padding: 11px 13px;
+    font-size: 10px;
+  }
+  .observatory.presentation-mode .airspace-summary > span:first-child,
+  .observatory.presentation-mode .airspace-summary small {
+    grid-column: 1 / -1;
+  }
+  .observatory.presentation-mode .airspace-summary small {
+    line-height: 1.35;
+  }
+}
+
+@media (max-width: 760px) and (max-height: 600px) and (orientation: portrait) {
+  .observatory.presentation-mode .tv-globe canvas {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+  }
+  .observatory.presentation-mode .moment-card .card-heading h2 {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 960px) and (max-height: 500px) and (orientation: landscape) {
+  .observatory.presentation-mode .page-body {
+    padding-top: 12px;
+  }
+  .observatory.presentation-mode .phone-view-trigger {
+    top: calc(8px + env(safe-area-inset-top, 0px));
+    left: max(150px, calc(env(safe-area-inset-left, 0px) + 134px));
+  }
+  .observatory.presentation-mode .flight-grid {
+    grid-template-columns: minmax(0, 1fr) 144px;
+    grid-template-rows: 1fr auto;
+    column-gap: 26px;
+  }
+  .observatory.presentation-mode .moment-card {
+    grid-row: 1;
+  }
+  .observatory.presentation-mode .moment-card .card-content {
+    padding-top: 8px;
+  }
+  .observatory.presentation-mode .moment-card .card-heading h2 {
+    font-size: 32px;
+  }
+  .observatory.presentation-mode .flight-identity {
+    padding: 6px 0;
+  }
+  .observatory.presentation-mode .flight-route small {
+    display: inline;
+    margin-left: 6px;
+  }
+  .observatory.presentation-mode .tv-globe {
+    grid-column: 2;
+    width: 144px;
+  }
+  .observatory.presentation-mode .tv-globe canvas {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto;
+  }
+  .observatory.presentation-mode .tv-globe figcaption {
+    font-size: 10px;
+  }
+  .observatory.presentation-mode .phone-flight-actions {
+    grid-row: 2;
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+  .observatory.presentation-mode .phone-dock {
+    padding-top: 6px;
+    padding-bottom: calc(6px + env(safe-area-inset-bottom, 0px));
+  }
+  .observatory.presentation-mode .airspace-heading {
+    top: calc(58px + env(safe-area-inset-top, 0px));
+  }
+  .observatory.presentation-mode .airspace-heading strong {
+    font-size: 32px;
+  }
+  .observatory.presentation-mode .airspace-summary {
+    right: auto;
+    bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+    width: min(520px, calc(100% - 32px));
+    grid-template-columns: repeat(4, auto);
+  }
+  .observatory.presentation-mode .airspace-summary > span:first-child,
+  .observatory.presentation-mode .airspace-summary small {
+    grid-column: auto;
+  }
+}

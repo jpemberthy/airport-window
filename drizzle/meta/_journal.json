@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1791730970249,
+      "tag": "0000_brown_mindworm",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "6",
+      "when": 1791845043551,
+      "tag": "0001_minor_ma_gnuci",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1791942694436,
+      "tag": "0002_sour_scream",
+      "breakpoints": true
+    }
+  ]
+}
