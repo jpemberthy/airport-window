@@ -182,6 +182,9 @@ for (const pack of [boston, aep, highland])
       for (const art of Object.values(pack.scenes))
         for (const url of [art.day, art.night])
           expect(existsSync(resolve('public', url.slice(1))), url).toBe(true);
+      if (pack.map)
+        for (const url of Object.values(pack.map.assets))
+          expect(existsSync(resolve('public', url.slice(1))), url).toBe(true);
       const { hasAirportMap, airportCacheKey } = await import('../lib/airport');
       const { HAS_TOWER } = await import('../lib/radio');
       expect(hasAirportMap).toBe(Boolean(pack.map));

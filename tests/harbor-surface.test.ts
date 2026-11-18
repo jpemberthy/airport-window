@@ -13,6 +13,7 @@ import {
 } from '../lib/harbor-view';
 import { harborTaxiLanes } from '../lib/harbor-lanes';
 import { localMeters } from '../lib/geo';
+import { airport } from '../lib/airport';
 import {
   harborFixtureTracks,
   HARBOR_FIXTURE_EPOCH as now,
@@ -148,10 +149,10 @@ describe('harbor pavement alignment', () => {
       r.artStart[0] * 0.5 + r.artEnd[0] * 0.5 + 1,
       r.artStart[1] * 0.5 + r.artEnd[1] * 0.5 + 1,
     ];
-    const values = [25, 150, 250].map((altitudeFt) => {
+    const values = [25, 150, 250].map((heightFt) => {
       const input = at(p, angle(r.artStart, r.artEnd), {
         onGround: false,
-        altitudeFt,
+        altitudeFt: airport.elevationFt + heightFt,
         speedKt: 110,
         verticalRateFpm: -500,
       });

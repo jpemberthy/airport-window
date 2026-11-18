@@ -1,8 +1,18 @@
 # Release verification
 
-The v1 handoff was checked on November 17, 2026. These checks describe this snapshot, not a commitment to maintain it or a guarantee of future feed coverage.
+The initial v1.0 handoff was checked on November 17, 2026; the AEP map revision was checked on November 18. These checks describe the snapshots, not a commitment to maintain them or a guarantee of future feed coverage.
 
-## Automated checks
+## v1.1 AEP map revision — November 18, 2026
+
+- 323 unit/integration tests across 40 files, including physical runway registration, non-folding mesh, geographic round trips, taxiway agreement with the bundled OSM source, outside/stale traffic, and surface alignment at 18 ft and 8,500 ft airport elevation. Boston regressions and the mapless synthetic third airport still pass.
+- Lint, TypeScript, asset validation and standalone production build passed; the Docker image was rebuilt and started healthy on the existing AEP database volume.
+- 12 Playwright scenarios passed. Map views were checked at 320px, 390px and 1440px in day/night, rain, fog and snow. Tests include navigation-control bounds, direct map-link behavior, unavailable-artwork fallback, and the existing flight-scene/optional-audio/feed checks.
+- Source runway and taxiway lines were overlaid on the day painting for visual alignment review. Day/night map screenshots were reviewed alongside the phone crops. Both map assets are 1672×941.
+- The map source, image-generation prompts, assets and reproduction instructions are in [the AEP map walkthrough](../airports/aep/MAP.md). The original LoganWatch workspace remains unchanged.
+
+The dependency-audit statement below records the November 17 check; this map revision changes no dependency versions.
+
+## Initial v1.0 automated checks
 
 - 318 unit/integration tests across 39 files: Boston regression behavior, AEP configuration, and a fictional high-altitude airport in Asia/Tokyo.
 - TypeScript typecheck and lint.

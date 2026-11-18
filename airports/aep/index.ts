@@ -1,4 +1,5 @@
 import { defineAirport } from '../types';
+import { aepMap } from './map';
 export const aep = defineAirport({
   id: 'aep',
   icao: 'SABE',
@@ -20,6 +21,7 @@ export const aep = defineAirport({
   },
   sceneBearing: 225,
   sceneStyle: 'classic',
+  map: aepMap,
   scenes: {
     approach: {
       day: '/airports/aep/approach-day.webp',

@@ -307,6 +307,7 @@ export default function Home() {
   const towerAudio = useRef<HTMLAudioElement | null>(null);
   const observatory = useRef<HTMLElement | null>(null);
   const presentationRef = useRef(false);
+  const requestedMap = useRef(false);
   const controlsTimer = useRef<number | null>(null);
   const wasFullscreen = useRef(false);
   const onTraffic = useCallback(
@@ -365,8 +366,9 @@ export default function Home() {
   }, []);
   useEffect(() => {
     const syncLocation = () => {
-      const enabled =
-        new URL(window.location.href).searchParams.get('mode') === 'tv';
+      const params = new URL(window.location.href).searchParams;
+      const enabled = params.get('mode') === 'tv';
+      requestedMap.current = enabled && params.get('view') === 'map';
       if (!enabled && document.fullscreenElement === observatory.current) {
         void document.exitFullscreen().catch(() => {});
         wasFullscreen.current = false;
@@ -407,7 +409,11 @@ export default function Home() {
   const setPresentationUrl = useCallback((enabled: boolean) => {
     const url = new URL(window.location.href);
     if (enabled) url.searchParams.set('mode', 'tv');
-    else url.searchParams.delete('mode');
+    else {
+      url.searchParams.delete('mode');
+      url.searchParams.delete('view');
+      requestedMap.current = false;
+    }
     window.history.pushState(null, '', url);
     presentationRef.current = enabled;
     setPresentation(enabled);
@@ -554,6 +560,7 @@ export default function Home() {
   const harborUnavailable = harborUnavailableReason(
     currentTraffic.freshness,
     airspaceStatus,
+    airport.map?.label,
   );
   const presentationCycle = usePresentationController(
     presentation,
@@ -563,6 +570,18 @@ export default function Home() {
   );
   const airspaceVisible =
     hasAirportMap && presentation && presentationCycle.phase === 'activity';
+  const showRequestedMap = presentationCycle.showHarbor;
+  useEffect(() => {
+    if (
+      requestedMap.current &&
+      hasAirportMap &&
+      presentation &&
+      harborUnavailable === null
+    ) {
+      requestedMap.current = false;
+      showRequestedMap();
+    }
+  }, [presentation, harborUnavailable, showRequestedMap]);
   const toggleHarbor = () => {
     if (airspaceVisible) presentationCycle.showStories();
     else presentationCycle.showHarbor();
@@ -1442,17 +1461,19 @@ export default function Home() {
               </>
             )}
           </p>
-          <p>
-            Harbor geography ©{' '}
-            <a
-              href="https://www.openstreetmap.org/copyright"
-              target="_blank"
-              rel="noreferrer"
-            >
-              OpenStreetMap contributors
-            </a>
-            .
-          </p>
+          {hasAirportMap && (
+            <p>
+              Map geography ©{' '}
+              <a
+                href="https://www.openstreetmap.org/copyright"
+                target="_blank"
+                rel="noreferrer"
+              >
+                OpenStreetMap contributors
+              </a>
+              .
+            </p>
+          )}
           <p className="modal-note">
             Near me uses your device-local viewing point to rank fresh, low
             flights and recent runway transitions. Multiple nearby flights are

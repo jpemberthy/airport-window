@@ -706,6 +706,9 @@
   .observatory.presentation-mode .phone-weather small {
     display: none;
   }
+  .observatory.presentation-mode .phone-weather > svg {
+    display: none;
+  }
   .observatory.presentation-mode .harbor-shortcut-compact {
     min-height: 44px;
     padding: 0 7px;

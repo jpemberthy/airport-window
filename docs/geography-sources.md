@@ -53,3 +53,7 @@ regenerate both files, and review the diff. The script enforces a 100 KB land
 budget and a 600 KB airport budget. The consumer should load land geometry only
 when a globe is displayed and should keep airport metadata on the server when
 enriching route responses.
+
+## AEP illustrated map
+
+The airport-map source, projection and artwork registration are documented in [airports/aep/MAP.md](../airports/aep/MAP.md). Editable OpenStreetMap ways are distributed as `public/data/aep-map.json` under ODbL-1.0. `node scripts/generate-aep-map-guide.mjs` regenerates its vector drawing scaffold locally. The runtime uses bundled day/night illustrations and the pack geometry, without a map-server account.

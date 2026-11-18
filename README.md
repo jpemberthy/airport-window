@@ -8,7 +8,7 @@ I plan to keep tinkering with [loganwatch.com](https://loganwatch.com) as time a
 
 **Unmaintained v1 release.** Shared for independent use and adaptation. No support, issue triage, pull-request reviews, or future updates are promised. Fork it and make it your own. Operators maintain and pay for their own installations.
 
-**Aeroparque Jorge Newbery (AEP / SABE), Buenos Aires, is ready to run.** Ten original AEP illustrations cover approach, landing, taxi, takeoff and climb, by day and night. Boston Logan is included as a reference airport pack, including its optional registered harbor illustration.
+**Aeroparque Jorge Newbery (AEP / SABE), Buenos Aires, is ready to run.** Ten original AEP illustrations cover approach, landing, taxi, takeoff and climb, by day and night. AEP also includes a day/night airport map with live aircraft over its coastal runway, terminal and the Río de la Plata. Boston Logan is included as a reference pack with its harbor map.
 
 ## Easiest: hand it to your coding agent
 
@@ -63,7 +63,9 @@ docker compose logs -f    # see what is happening; Ctrl+C exits the logs
 
 The database lives in a persistent Docker volume. Setup and cleanup are automatic. Do not add `--volumes` to the stop command: that deletes your saved data. This quickstart runs on your own computer; it does not publish a website. For your own domain/server, see [operations](docs/OPERATIONS.md).
 
-![Aeroparque at night](public/airports/aep/approach-night.webp)
+![Aeroparque airport map at night](public/airports/aep/map/night.webp)
+
+**Try the map:** open TV mode and click **Show airport map**, or open **http://localhost:3000/?mode=tv&view=map**. Live aircraft move over the registered illustration, with matching day/night lighting and weather effects. [How the map was made](airports/aep/MAP.md). Map geography © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright).
 
 ## Want LoganWatch's extra flight details and tower radio?
 
@@ -112,7 +114,7 @@ Run `npm run check:pack` to validate local artwork. Add `-- --live` for a small,
 - Daylight follows the airport location. Nearby and flight-phase altitude thresholds use approximate height above airport elevation; displayed flight altitude remains the reported altitude.
 - Flight phases are inferences from movement, not confirmed schedules. Nearby aircraft may be serving another airport or just passing through. Missing or stale data is shown honestly.
 - Optional Flightradar24 origin/destination enrichment is **off**. Without it, live flights still work and unknown routes stay absent. Your own credentials, permissions and budgets are required to enable it.
-- AEP has no tower stream or registered runway map. Their controls are hidden. Its scenery is illustrative and its aircraft aren't placed on a geographic map.
+- AEP includes an illustrated map registered to its runway and taxiways. It appears in TV mode or via **Show airport map**; aircraft outside the view are counted separately. Tower audio remains unconfigured. Other packs can omit the map and keep flight scenes only. All art is illustrative, not navigation data.
 - English UI, feet/knots and Fahrenheit are the v1 defaults. Audio begins only after a user gesture; radio may have quiet gaps or fail independently.
 
 ## Check your fork

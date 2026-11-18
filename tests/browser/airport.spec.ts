@@ -235,3 +235,121 @@ test('health and production-only boundaries', async ({ request }) => {
     expect((await request.get(path)).status(), path).toBe(404);
   expect((await request.post('/api/route-maintenance')).status()).toBe(404);
 });
+
+for (const width of [320, 390, 1440])
+  test(`${width}px: registered airport map in daylight, darkness and adverse weather`, async ({
+    page,
+  }) => {
+    test.skip(!airport.map, 'Selected pack has no map');
+    const errors: string[] = [];
+    page.on('pageerror', (e) => errors.push(e.message));
+    await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
+    for (const [light, condition] of [
+      ['day', 'clear'],
+      ['night', 'clear'],
+      ['day', 'rain'],
+      ['day', 'fog'],
+      ['night', 'snow'],
+    ]) {
+      await page.unrouteAll();
+      await fixtures(page, 'approach', light, condition);
+      await page.goto('/?mode=tv');
+      const button = page
+        .getByRole('button', {
+          name: `Show ${(airport.map?.label ?? 'Harbor').toLowerCase()}`,
+          exact: true,
+        })
+        .filter({ visible: true });
+      await expect(button).toBeEnabled();
+      await button.click();
+      const map = page.locator('.living-airspace');
+      await expect(map).toHaveAttribute('aria-hidden', 'false');
+      await expect(map).toHaveAttribute('data-status', 'ready');
+      await expect(map.locator('.harbor-summary')).toContainText('aircraft');
+      if (width < 760) {
+        const controls = await page
+          .locator('.phone-header button')
+          .evaluateAll((buttons) =>
+            buttons.map((b) => {
+              const r = b.getBoundingClientRect();
+              return { left: r.left, right: r.right };
+            }),
+          );
+        for (const bounds of controls) {
+          expect(bounds.left).toBeGreaterThanOrEqual(0);
+          expect(bounds.right).toBeLessThanOrEqual(width);
+        }
+      }
+      await expect
+        .poll(() =>
+          map
+            .locator('img')
+            .evaluateAll((images) =>
+              images.every((i) => (i as HTMLImageElement).naturalWidth > 0),
+            ),
+        )
+        .toBe(true);
+      expect(
+        await page
+          .locator('body')
+          .evaluate((el) => el.scrollWidth <= window.innerWidth),
+      ).toBe(true);
+      await page.screenshot({
+        path: `.context/screenshots/${airport.id}-map-${width}-${light}-${condition}.png`,
+        fullPage: true,
+        animations: 'disabled',
+      });
+      await page
+        .getByRole('button', { name: 'Back to stories', exact: true })
+        .filter({ visible: true })
+        .click();
+      await expect(map).toHaveAttribute('aria-hidden', 'true');
+    }
+    expect(errors).toEqual([]);
+  });
+
+test('missing airport map artwork keeps the flight scenes available', async ({
+  page,
+}) => {
+  test.skip(!airport.map, 'Selected pack has no map');
+  await fixtures(page);
+  await page.route('**/airports/aep/map/day.webp', (route) => route.abort());
+  await page.goto('/?mode=tv');
+  await expect(page.locator('.moment-card h2')).toContainText('Approach');
+  await expect(
+    page
+      .getByRole('button', {
+        name: `Show ${(airport.map?.label ?? 'Harbor').toLowerCase()}`,
+        exact: true,
+      })
+      .filter({ visible: true }),
+  ).toBeDisabled();
+  await expect(page.locator('.living-airspace')).toHaveAttribute(
+    'aria-hidden',
+    'true',
+  );
+});
+
+test('map link waits for assets and fresh data, then opens the registered view', async ({
+  page,
+}) => {
+  test.skip(!airport.map, 'Selected pack has no map');
+  await fixtures(page);
+  await page.goto('/?mode=tv&view=map');
+  await expect(page.locator('.living-airspace')).toHaveAttribute(
+    'data-status',
+    'ready',
+  );
+  await expect(page.locator('.living-airspace')).toHaveAttribute(
+    'aria-hidden',
+    'false',
+  );
+  await page
+    .getByRole('button', { name: 'Back to stories', exact: true })
+    .filter({ visible: true })
+    .click();
+  await expect(page.locator('.living-airspace')).toHaveAttribute(
+    'aria-hidden',
+    'true',
+  );
+});

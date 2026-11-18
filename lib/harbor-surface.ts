@@ -1,4 +1,5 @@
 import { localMeters } from './geo';
+import { heightAboveAirport } from './airport';
 import { harborTaxiLanes } from './harbor-lanes';
 import {
   harborHeading,
@@ -56,11 +57,12 @@ export function matchHarborSurface(
 ): HarborSurfaceMatch | null {
   const report = history.current;
   const ground = report.onGround === true;
+  const height = heightAboveAirport(report.altitudeFt);
   const rolling = (report.speedKt ?? 0) >= 1.5;
   const runwayFlight =
     report.onGround === false &&
-    report.altitudeFt !== null &&
-    report.altitudeFt < 250 &&
+    height !== null &&
+    height < 250 &&
     (report.speedKt ?? 0) >= 35 &&
     (Math.abs(report.verticalRateFpm ?? 0) >= 180 ||
       history.previous?.onGround === true);
@@ -107,7 +109,7 @@ export function matchHarborSurface(
       const strength =
         (1 - fade((correctionMetres / limit - 0.7) / 0.3)) *
         (1 - fade((pixels - 12) / 4)) *
-        (ground ? 1 : 1 - fade((report.altitudeFt! - 75) / 175));
+        (ground ? 1 : 1 - fade((height! - 75) / 175));
       if (!best || score < best.score)
         best = {
           point,

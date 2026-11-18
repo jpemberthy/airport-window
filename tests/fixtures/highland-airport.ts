@@ -3,6 +3,7 @@ import { aep } from '../../airports/aep';
 // Fictional high-altitude airport: no live network calls ever use this pack.
 export const highland = defineAirport({
   ...aep,
+  map: undefined,
   id: 'test-highland',
   icao: 'TEST',
   iata: 'TST',

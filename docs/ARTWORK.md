@@ -30,3 +30,7 @@ Keep aircraft and identifying features visible when the browser crops a wide sce
 Run `/airport-lab` in development to inspect every phase and day/night/dusk transition, including heavy rain, fog, snow, unavailable weather, phone crops, and reduced motion. Compare the pair for unwanted movement. This preview is synthetic and makes no data-provider requests.
 
 Classic scenes are complete opaque illustrations. Boston's advanced layered mode additionally needs transparent foregrounds, aircraft masks and shared sky assets. A live aircraft map is a separate advanced feature requiring registered runway/taxi geometry; don't enable it merely by supplying a drawing.
+
+## AEP airport map
+
+AEP also includes separate day/night map artwork registered to its runway and taxiways. The [map walkthrough](../airports/aep/MAP.md) contains its OpenStreetMap source, reproducible drawing guide, exact built-in image-generation prompts and registration checks. These are two additional assets; the ten flight-phase scenes remain unchanged. No aircraft are painted into the maps: the app overlays reported traffic.

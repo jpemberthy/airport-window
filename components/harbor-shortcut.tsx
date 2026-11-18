@@ -2,6 +2,7 @@
 
 import { useId } from 'react';
 import { Map as MapIcon, PanelsTopLeft } from 'lucide-react';
+import { airport } from '@/lib/airport';
 
 export function HarborShortcut({
   showing,
@@ -16,7 +17,8 @@ export function HarborShortcut({
 }) {
   const id = useId();
   const reason = showing ? null : unavailableReason;
-  const label = showing ? 'Back to stories' : 'Show harbor';
+  const mapLabel = airport.map?.label ?? 'Harbor';
+  const label = showing ? 'Back to stories' : `Show ${mapLabel.toLowerCase()}`;
   return (
     <>
       <button
@@ -33,7 +35,13 @@ export function HarborShortcut({
         ) : (
           <MapIcon size={17} aria-hidden="true" />
         )}
-        <span>{compact ? (showing ? 'Stories' : 'Harbor') : label}</span>
+        <span>
+          {compact
+            ? showing
+              ? 'Stories'
+              : (airport.map?.shortLabel ?? mapLabel)
+            : label}
+        </span>
       </button>
       {reason && (
         <span id={id} className="harbor-shortcut-reason">

@@ -107,7 +107,8 @@ export function MobileControls({
     <>
       <header className="phone-only phone-header">
         <h1 aria-label={`${airport.brand.title}, ${airport.name}`}>
-          <span aria-hidden="true">✳</span> {airport.brand.wordmark}
+          <span aria-hidden="true">✳</span>{' '}
+          {presentation ? airport.iata : airport.brand.wordmark}
           <span className="phone-period">.</span>
         </h1>
         <button

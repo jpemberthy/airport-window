@@ -8,6 +8,8 @@ export interface SceneArt {
   aircraftMask?: string;
 }
 export interface AirportMap {
+  label?: string;
+  shortLabel?: string;
   width: number;
   height: number;
   origin: { lat: number; lon: number };

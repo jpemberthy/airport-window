@@ -118,9 +118,10 @@ export function usePresentationController(
 export function harborUnavailableReason(
   freshness: InterludeFreshness,
   status: InterludeStatus,
+  label = 'Harbor',
 ) {
-  if (status === 'error') return 'Harbor artwork is unavailable.';
-  if (status === 'loading') return 'Harbor artwork is loading.';
+  if (status === 'error') return `${label} artwork is unavailable.`;
+  if (status === 'loading') return `${label} artwork is loading.`;
   if (freshness !== 'fresh') return 'Waiting for fresh aircraft positions.';
   return null;
 }
