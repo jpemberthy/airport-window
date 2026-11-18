@@ -10,6 +10,8 @@ The additional day/night maps in `public/airports/aep/map/` were generated for t
 
 The Boston illustrations, scene masks and sprites in `public/art/` and `public/sprites/` were authored for LoganWatch and retained for the reference pack. They are illustrative. No airline, airport authority or data provider endorses this project. Aircraft colors are decorative, not reliable aircraft identification.
 
+`public/airports/mde/` contains ten original Rionegro-inspired flight-scene illustrations created with the built-in image-generation tool, offered under the root MIT terms to the extent rights are held. They are imagined scenes, not copies of aerial photographs or measured maps. Prompts and process: `airports/mde/ARTWORK.md`. Factual MDE configuration sources, including the Aerocivil AIP edition and IANA time-zone entry, are recorded in `airports/mde/README.md`; no AIP chart is redistributed.
+
 ## Geographic data
 
 - **OpenStreetMap contributors:** `public/data/logan-map.json` and `public/data/aep-map.json` are derived geographic databases incorporating OpenStreetMap coastline, roads, buildings and airport geometry. AEP's `airports/aep/map.ts` coordinate arrays and `public/airports/aep/map/guide.svg` derive from that same AEP source. It remains under [Open Data Commons Open Database License 1.0](https://opendatacommons.org/licenses/odbl/1-0/), independently of the code license. The databases are distributed in editable JSON form. Original sources and transformations are recorded in their metadata and the pack documentation. Preserve [OpenStreetMap attribution](https://www.openstreetmap.org/copyright) and comply with the database's redistribution requirements. Both registered scenes include attribution in About.

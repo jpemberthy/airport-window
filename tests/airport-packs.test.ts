@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { aep } from '../airports/aep';
 import { boston } from '../airports/boston';
+import { mde } from '../airports/mde';
 import { highland } from './fixtures/highland-airport';
 import { defineAirport } from '../airports/types';
 import type { AircraftTrack, TrackHistory } from '../lib/types';
@@ -12,7 +13,7 @@ afterEach(() => {
   vi.unstubAllGlobals();
   vi.resetModules();
 });
-for (const pack of [boston, aep, highland])
+for (const pack of [boston, aep, mde, highland])
   describe(`${pack.id} pack only`, () => {
     async function select() {
       vi.resetModules();
@@ -82,6 +83,25 @@ for (const pack of [boston, aep, highland])
       const { nearbyMoments, validViewpoint } = await import('../lib/observer');
       expect(localMeters(pack.center.lon, pack.center.lat)).toEqual([0, 0]);
       expect(flightMoment(history, now)).toBe('landing');
+      for (const [height, rate, expected] of [
+        [300, 900, 'takeoff'],
+        [2500, -500, 'approach'],
+        [2500, 900, 'climb'],
+      ] as const) {
+        expect(
+          flightMoment(
+            {
+              ...history,
+              current: {
+                ...current,
+                altitudeFt: pack.elevationFt + height,
+                verticalRateFpm: rate,
+              },
+            },
+            now,
+          ),
+        ).toBe(expected);
+      }
       expect(validViewpoint(pack.center)).toBe(true);
       expect(validViewpoint({ lat: 0, lon: 0 })).toBe(false);
       expect(
@@ -120,6 +140,11 @@ for (const pack of [boston, aep, highland])
           hour12: false,
         }).format(now),
       );
+      if (pack.id === 'mde') {
+        // Colombia stays on UTC-5 when Boston and other northern airports shift.
+        expect(airportTime(Date.parse('2026-01-15T15:00:00Z'))).toBe('10:00');
+        expect(airportTime(Date.parse('2026-07-15T15:00:00Z'))).toBe('10:00');
+      }
       const home = {
         icao: pack.icao,
         code: pack.iata,
@@ -149,6 +174,14 @@ for (const pack of [boston, aep, highland])
       expect(remoteAirport(route)).toBe(remote);
       const unrelated = { ...route, origin: { ...home, icao: 'ZZZZ' } };
       expect(routeForMoment(unrelated, 'climb')).toBeNull();
+      if (pack.id === 'mde') {
+        // Medellín's other airport is inside the feed radius, but is not MDE.
+        const eoh = {
+          ...route,
+          origin: { ...home, icao: 'SKMD', code: 'EOH' },
+        };
+        expect(routeForMoment(eoh, 'climb')).toBeNull();
+      }
     });
     it('paces optional paid routes using the selected time zone', async () => {
       await select();

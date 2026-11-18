@@ -6,6 +6,8 @@ You own the fork, deployment, ongoing fixes and provider accounts. This guide is
 
 ## 1. Copy a pack
 
+If you want one of the included airports, just select its pack: AEP, Boston, or [Medellín MDE](airports/mde/README.md). The rest of this guide is for creating another airport. MDE demonstrates a real high-altitude airport added without changing the application core.
+
 Copy `airports/template/` to `airports/your-airport/`. Edit its `index.ts`, replacing the exported name and all placeholder fields. Use authoritative airport data (the bundled OurAirports metadata is a useful starting point).
 
 Set: a unique lowercase `id`; ICAO/IATA codes; full name, city and country; latitude/longitude in decimal degrees (negative south/west); elevation in **feet**; traffic radius in **nautical miles**; a METAR station; an IANA time zone; branding; and the viewing direction of your illustration in degrees clockwise from north.
@@ -45,7 +47,7 @@ The live check makes one request to each of the two position providers and one t
 
 Open `/airport-lab` and review all five phases at day, dusk and night, with rain, fog and snow, at phone and desktop widths. This page uses synthetic data. Then inspect the actual homepage: station/city labels, local time, displayed tracks near the selected airport, nearby selection, globe, weather-unavailable behavior and user-started ambience.
 
-Run the README checks before deployment. The ordinary regression fixtures are Boston-specific; `tests/airport-packs.test.ts` also proves the pack interface with AEP and a fictional high-altitude airport. Add your pack to that test's pack list if you want the same behavior checks (provide valid local assets; never turn synthetic test coordinates into live queries).
+Run the README checks before deployment. The ordinary regression fixtures are Boston-specific; `tests/airport-packs.test.ts` also proves the pack interface with AEP, MDE and a fictional high-altitude airport. Add your pack to that test's pack list if you want the same behavior checks (provide valid local assets; never turn synthetic test coordinates into live queries).
 
 ## 4. Deploy your own copy
 

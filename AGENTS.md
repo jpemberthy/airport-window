@@ -26,6 +26,8 @@ No API keys or `.env` are required for the base app. Don't turn on paid routes t
 
 ## If the person wants another airport
 
+First check the included packs. **MDE / SKRG** is José María Córdova in Rionegro serving Medellín, not EOH / SKMD. Its artwork is complete: follow `airports/mde/README.md`, select the pack and run it with its own volume. Do not regenerate its scenes or add a map/radio just to launch it. Boston is also included as a reference. The steps below apply to a new pack.
+
 1. Resolve the airport name/code unambiguously. Look up authoritative identifiers, coordinates, elevation, METAR station and IANA time zone. Record sources; don't guess or treat the template's placeholders as real data.
 2. Copy `airports/template` into a new pack. Configure identifiers, branding, coordinates, elevation in feet, radius in nautical miles, weather station, time zone and scene bearing. Select it in `airport.config.ts`. One installation serves one airport. Keep ordinary airport-specific changes in its pack and artwork, not in application components or provider code.
 3. Check provider coverage before spending time on artwork: `npm ci`, then `npm run check:pack -- --live`. Temporary AEP image references are allowed for this check only. Check responses, locations and report age, not just HTTP success. An empty airport or a failed request is not evidence that a provider works. Don't run live checks against the fictional test airport. If the included providers cannot cover the real airport, explain that limitation; a new adapter is separate work.
@@ -58,7 +60,7 @@ npm run build
 
 Use `npm run dev` and `/airport-lab` to inspect every phase on phone and desktop, by day, dusk and night, with rain/fog/snow and unavailable weather. Inspect the actual homepage too: airport labels, local time, nearby controls, globe, optional controls and user-started audio. Verify live feed coverage separately. Do not report synthetic fixtures as live flights.
 
-The existing unit suite includes Boston, AEP and a fictional airport at a different elevation/time zone. Extend the pack tests for a new airport. The Playwright browser suite targets AEP and uses synthetic data; adapt its fixtures and expectations before claiming it verifies another airport. `docs/VERIFICATION.md` explains how to run it.
+The existing unit suite includes Boston, AEP, MDE and a fictional airport at a different elevation/time zone. Extend the pack tests for a new airport. The Playwright browser suite reads the selected pack and uses synthetic data; AEP and MDE have been verified. Its day/night times must be adapted for airports in other time zones. Build the target with the same selector and use `AIRPORT_TEST_URL` for its port. `docs/VERIFICATION.md` explains how to run it.
 
 For deployment changes, also check startup without the author's accounts, database persistence across restart, and cleanup. Respect existing data. For documentation-only edits, check paths, links and commands; a full application rebuild isn't necessary.
 

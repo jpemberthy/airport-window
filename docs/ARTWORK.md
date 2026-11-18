@@ -23,6 +23,8 @@ The night images were separate edits of their corresponding day images using thi
 
 ## Your own airport
 
+MDE provides a second original scene set for a mountainous inland airport. Its [complete prompt set and provenance](../airports/mde/ARTWORK.md) accompany the ten files in `public/airports/mde/`.
+
 Replace the airport, local landscape and skyline in the seed prompt. Use a recognizable but illustrative setting. Generate the day composition first, then derive night from that exact image. Do not generate unrelated day/night images: crossfading reveals geometry drift.
 
 Keep aircraft and identifying features visible when the browser crops a wide scene on a phone. Leave dark, relatively quiet space behind the flight card. Avoid baked-in rain/fog/cloud cover; the app overlays weather and adjusts lighting. Export same-size WebP pairs and put their public paths in the pack's `scenes` object.

@@ -10,6 +10,8 @@ I plan to keep tinkering with [loganwatch.com](https://loganwatch.com) as time a
 
 **Aeroparque Jorge Newbery (AEP / SABE), Buenos Aires, is ready to run.** Ten original AEP illustrations cover approach, landing, taxi, takeoff and climb, by day and night. AEP also includes a day/night airport map with live aircraft over its coastal runway, terminal and the Río de la Plata. Boston Logan is included as a reference pack with its harbor map.
 
+**Medellín is included too:** José María Córdova (MDE / SKRG) in Rionegro has its own ten day/night flight scenes. [Run MDE](airports/mde/README.md). It uses the same app, with no map or tower stream configured. AEP remains the default.
+
 ## Easiest: hand it to your coding agent
 
 Use a coding agent that can work with files and run commands on your computer. Give it this repository link and paste one of these prompts. You don't need to understand the code.
@@ -36,7 +38,17 @@ Keep the free defaults. Don't change my other projects or deploy it online.
 Run and test it locally, open it in my browser, and explain anything unfinished.
 ```
 
-The agent's instructions are in [AGENTS.md](AGENTS.md). AEP already includes the artwork; another airport needs its own images. If the agent can't generate images, it should help you prepare them and say what's missing. An agent doesn't replace a server: your computer or host must stay running for the app to stay available.
+**To run the included Medellín airport:**
+
+```text
+Set up https://github.com/jpemberthy/airport-window on my computer.
+Read README.md, AGENTS.md and airports/mde/README.md.
+Run the included MDE / SKRG pack with its own database and free defaults.
+Don't change my other projects or deploy it online. No new artwork is needed.
+Test it, open it in my browser, and give me the URL and stop/restart commands.
+```
+
+The agent's instructions are in [AGENTS.md](AGENTS.md). AEP, MDE and the Boston reference already include artwork; a new airport needs its own images. If the agent can't generate images, it should help you prepare them and say what's missing. An agent doesn't replace a server: your computer or host must stay running for the app to stay available.
 
 ## Or run AEP yourself
 
@@ -74,7 +86,7 @@ The Boston project includes two optional extras:
 - **Flight details from [Flightradar24](https://fr24api.flightradar24.com/docs/getting-started).** The free feeds supply positions and callsigns; the paid API adds matched flight numbers and origin/destination details when available. You need your own API account, permissions and budget. A regular Flightradar24 app subscription is separate from API access.
 - **Boston Logan tower radio via [LiveATC](https://www.liveatc.net/hlisten.php?mount=kbos1_twr&icao=kbos).** This is a real radio stream, separate from the app's generated ambience. Another airport needs its own available, permitted stream; don't reuse Boston's audio for it.
 
-**AEP starts with both extras off.** Live flights, weather and ambience work without them. The Boston reference pack retains its tower configuration. Agents can follow the [optional-feature instructions](docs/OPERATIONS.md#optional-paid-route-enrichment) to investigate and configure these for your airport.
+**AEP and MDE start with both extras off.** Live flights, weather and ambience work without them. The Boston reference pack retains its tower configuration. Agents can follow the [optional-feature instructions](docs/OPERATIONS.md#optional-paid-route-enrichment) to investigate and configure these for your airport.
 
 If you want those extras, give your agent this follow-up:
 
@@ -101,6 +113,7 @@ Edit **`airport.config.ts`**, then rebuild and restart. One installation serves 
 import { aep } from './airports/aep';
 export default aep;
 // For the Boston reference pack, import { boston } from './airports/boston'.
+// For Medellín, import { mde } from './airports/mde' and export default mde.
 ```
 
 A new airport is a folder of configuration and artwork. Follow [PORTING.md](PORTING.md), starting with `airports/template`. No application-core changes are needed for an airport supported by the included data adapters. A different data provider requires its own adapter.
@@ -127,7 +140,7 @@ npm run check:pack
 npm run build
 ```
 
-The regression suite exercises the Boston reference pack. Additional pack tests exercise AEP and a fictional high-altitude airport in another time zone, without provider calls or paid credits. Browser checks and their invocation are documented in [verification](docs/VERIFICATION.md).
+The regression suite exercises the Boston reference pack. Additional pack tests exercise AEP, MDE at 7,024 ft in America/Bogota, and a fictional high-altitude airport in another time zone, without provider calls or paid credits. MDE was added with its pack and artwork alone: no application-core changes. Browser checks and their invocation are documented in [verification](docs/VERIFICATION.md).
 
 The release has a documented [upstream dependency audit limitation](docs/VERIFICATION.md#dependency-audit-limitation); operators should review it before publishing an Internet-facing instance.
 

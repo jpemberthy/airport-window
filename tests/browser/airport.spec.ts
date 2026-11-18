@@ -1,6 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import airport from '../../airport.config';
 import { mkdirSync } from 'node:fs';
+import { getTimes } from 'suncalc';
 const phases = ['approach', 'landing', 'taxi', 'takeoff', 'climb'] as const;
 async function fixtures(
   page: Page,
@@ -8,9 +9,16 @@ async function fixtures(
   light = 'day',
   condition = 'clear',
 ) {
-  const timestamp = new Date(
-    light === 'day' ? '2026-11-17T15:00:00Z' : '2026-11-17T04:00:00Z',
-  );
+  const timestamp =
+    light === 'dusk'
+      ? getTimes(
+          new Date('2026-11-17T15:00:00Z'),
+          airport.center.lat,
+          airport.center.lon,
+        ).sunset!
+      : new Date(
+          light === 'day' ? '2026-11-17T15:00:00Z' : '2026-11-17T04:00:00Z',
+        );
   await page.clock.install({ time: timestamp });
   const now = timestamp.getTime();
   const isGround = phase === 'taxi';
@@ -28,7 +36,7 @@ async function fixtures(
         aircraft: [
           {
             id: 'abcdef',
-            callsign: 'ARG123',
+            callsign: 'ZZZ123',
             registration: null,
             aircraftType: 'A320',
             lat: airport.center.lat + 0.01,
@@ -45,8 +53,8 @@ async function fixtures(
             observedAt: now,
             positionSource: 'adsb-lol',
             airline: {
-              name: 'Aerolíneas Argentinas',
-              code: 'AR',
+              name: 'Synthetic test airline',
+              code: 'ZZ',
               color: '#56b6ec',
               sprite: 0,
             },
@@ -89,13 +97,46 @@ async function fixtures(
     route.fulfill({ json: { status: 'disabled', route: null } }),
   );
 }
+async function settledScene(page: Page, light = 'day') {
+  const scene = page.locator('.moment-card .flight-scene');
+  const mix = () =>
+    scene.evaluate((el) =>
+      Number((el as HTMLElement).style.getPropertyValue('--day-mix')),
+    );
+  if (light === 'day') await expect.poll(mix).toBe(1);
+  else if (light === 'night') await expect.poll(mix).toBe(0);
+  else {
+    await expect.poll(mix).toBeGreaterThan(0);
+    await expect.poll(mix).toBeLessThan(1);
+  }
+  const images = scene.locator('img');
+  await expect
+    .poll(() =>
+      images.evaluateAll(
+        (imgs) =>
+          imgs.length > 0 &&
+          imgs.every(
+            (img) =>
+              (img as HTMLImageElement).complete &&
+              (img as HTMLImageElement).naturalWidth > 0,
+          ),
+      ),
+    )
+    .toBe(true);
+  // complete/naturalWidth precede async decoding; wait for the actual paint asset.
+  await images.evaluateAll(async (imgs) => {
+    await Promise.all(imgs.map((img) => (img as HTMLImageElement).decode()));
+  });
+}
 mkdirSync('.context/screenshots', { recursive: true });
 for (const width of [390, 1440])
-  test(`${width}px: all phases and day/night artwork`, async ({ page }) => {
+  test(`${width}px: all phases and day/dusk/night artwork`, async ({
+    page,
+  }) => {
     const errors: string[] = [];
     page.on('pageerror', (e) => errors.push(e.message));
     await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
-    for (const light of ['day', 'night'])
+    for (const light of ['day', 'dusk', 'night'])
       for (const phase of phases) {
         await page.unrouteAll();
         await fixtures(page, phase, light);
@@ -107,17 +148,7 @@ for (const width of [390, 1440])
           '.moment-card .flight-scene img.scene-original',
         );
         await expect(imgs.first()).toBeVisible();
-        await expect
-          .poll(() =>
-            imgs.evaluateAll((images) =>
-              images.every(
-                (i) =>
-                  (i as HTMLImageElement).complete &&
-                  (i as HTMLImageElement).naturalWidth > 0,
-              ),
-            ),
-          )
-          .toBe(true);
+        await settledScene(page, light);
         await expect(
           page.getByRole('button', { name: 'Play tower', exact: true }),
         ).toHaveCount(airport.tower ? 2 : 0);
@@ -141,6 +172,7 @@ for (const condition of ['rain', 'fog', 'snow'])
       await page.setViewportSize({ width, height: width === 390 ? 844 : 1000 });
       await page.goto('/');
       await expect(page.locator('.moment-card h2')).toContainText('Approach');
+      await settledScene(page);
       await page.screenshot({
         path: `.context/screenshots/${airport.id}-${width}-${condition}.png`,
         fullPage: true,
@@ -157,7 +189,9 @@ test('optional capabilities, nearby mode, audio and unavailable feeds', async ({
   await expect(page.locator('.moment-card h2')).toContainText('Approach');
   if (!airport.map) {
     await expect(
-      page.getByRole('button', { name: /Show harbor|Back to stories|Harbor/ }),
+      page.getByRole('button', {
+        name: /Show harbor|Show airport map|Back to stories|Harbor/,
+      }),
     ).toHaveCount(0);
     await expect(page.locator('.living-airspace')).toHaveCount(0);
   }
@@ -223,7 +257,12 @@ test('optional capabilities, nearby mode, audio and unavailable feeds', async ({
   });
 });
 test('health and production-only boundaries', async ({ request }) => {
-  expect((await request.get('/api/health')).status()).toBe(200);
+  const health = await request.get('/api/health');
+  expect(health.status()).toBe(200);
+  expect(await health.json()).toMatchObject({
+    status: 'ok',
+    airport: airport.icao,
+  });
   for (const path of [
     '/airport-lab',
     '/weather-lab',
@@ -234,6 +273,30 @@ test('health and production-only boundaries', async ({ request }) => {
   ])
     expect((await request.get(path)).status(), path).toBe(404);
   expect((await request.post('/api/route-maintenance')).status()).toBe(404);
+});
+
+test('selected airport labels, local clock and globe follow the pack', async ({
+  page,
+}) => {
+  await fixtures(page);
+  await page.setViewportSize({ width: 1440, height: 1000 });
+  await page.goto('/?mode=tv');
+  await expect(page).toHaveTitle(new RegExp(airport.brand.title));
+  await expect(page.locator('.header-center')).toContainText(
+    `${airport.city.toUpperCase()} · ${airport.icao}`,
+  );
+  const localTime = new Intl.DateTimeFormat('en-US', {
+    timeZone: airport.timeZone,
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  }).format(new Date('2026-11-17T15:00:00Z'));
+  await expect(page.locator('.header-time time')).toContainText(localTime);
+  await expect(
+    page
+      .getByRole('figure', { name: `Globe centered on ${airport.city}` })
+      .filter({ visible: true }),
+  ).toBeVisible();
 });
 
 for (const width of [320, 390, 1440])
@@ -313,7 +376,7 @@ test('missing airport map artwork keeps the flight scenes available', async ({
 }) => {
   test.skip(!airport.map, 'Selected pack has no map');
   await fixtures(page);
-  await page.route('**/airports/aep/map/day.webp', (route) => route.abort());
+  await page.route(`**${airport.map!.assets.day}`, (route) => route.abort());
   await page.goto('/?mode=tv');
   await expect(page.locator('.moment-card h2')).toContainText('Approach');
   await expect(
@@ -328,6 +391,21 @@ test('missing airport map artwork keeps the flight scenes available', async ({
     'aria-hidden',
     'true',
   );
+});
+
+test('a pack without a map keeps stories when opened through a map link', async ({
+  page,
+}) => {
+  test.skip(Boolean(airport.map), 'Selected pack includes a map');
+  await fixtures(page);
+  await page.goto('/?mode=tv&view=map');
+  await expect(page.locator('.moment-card h2')).toContainText('Approach');
+  await expect(page.locator('.living-airspace')).toHaveCount(0);
+  await expect(
+    page.getByRole('button', {
+      name: /Show harbor|Show airport map|Back to stories/,
+    }),
+  ).toHaveCount(0);
 });
 
 test('map link waits for assets and fresh data, then opens the registered view', async ({
