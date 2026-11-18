@@ -2,6 +2,8 @@
 
 You own the fork, deployment, ongoing fixes and provider accounts. This guide is the handoff; the original author does not operate installations for other airports.
 
+**Using a coding agent?** Paste the [another-airport prompt in the README](README.md#easiest-hand-it-to-your-coding-agent). It points the agent to [AGENTS.md](AGENTS.md) and this guide. You only need to supply the airport name/code; the agent can work through the technical steps below.
+
 ## 1. Copy a pack
 
 Copy `airports/template/` to `airports/your-airport/`. Edit its `index.ts`, replacing the exported name and all placeholder fields. Use authoritative airport data (the bundled OurAirports metadata is a useful starting point).

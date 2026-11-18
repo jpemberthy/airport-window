@@ -1,31 +1,67 @@
 # Airport Window
 
-A self-hosted, pixel-art window onto your local airport. Live aircraft, current weather, day/night illustrations, a small globe, and browser-generated ambience.
+A pixel-art window onto your local airport. Live aircraft, weather, day/night illustrations, a small globe, and ambience. You run it on your own computer or server.
 
 **Unmaintained v1 release.** Shared for independent use and adaptation. No support, issue triage, pull-request reviews, or future updates are promised. Fork it and make it your own. Operators maintain and pay for their own installations.
 
-![Aeroparque at night](public/airports/aep/approach-night.webp)
-
 **Aeroparque Jorge Newbery (AEP / SABE), Buenos Aires, is ready to run.** Ten original AEP illustrations cover approach, landing, taxi, takeoff and climb, by day and night. Boston Logan is included as a reference airport pack, including its optional registered harbor illustration.
 
-This is an independent source release derived from [LoganWatch](https://loganwatch.com), by [Juan Pemberthy](https://juan.pemberthy.com). It has no connection to LoganWatch's deployment, databases, credentials or update process. LoganWatch's ongoing development does not imply updates to this snapshot.
+## Easiest: hand it to your coding agent
 
-## Run it
+Use a coding agent that can work with files and run commands on your computer. Give it this repository link and paste one of these prompts. You don't need to understand the code.
 
-Install Docker with Compose v2.24 or newer. In a clone or downloaded copy:
+**To run AEP as it is:**
 
-```sh
-docker compose up --build -d
+```text
+Set up https://github.com/jpemberthy/airport-window on my computer.
+Read its README.md and AGENTS.md, then run the included AEP airport.
+Keep the free defaults. Don't change my other projects or deploy it online.
+Verify that it works, open it in my browser, and give me the local URL
+and the commands to stop and restart it.
+If something is missing on my computer, help me through that step.
 ```
 
-Open **http://localhost:3000**. No account, API key, or `.env` file is needed for aircraft positions, weather and ambience. The named `airport-data` volume holds SQLite; restarting/rebuilding keeps it. Initialization and minute-by-minute cache cleanup are automatic.
+**To make it for another airport:** replace the brackets, then paste:
 
-```sh
-docker compose logs -f airport
-docker compose down              # preserves the database
+```text
+Use https://github.com/jpemberthy/airport-window to make a version for
+[AIRPORT NAME, CITY, COUNTRY — or airport code].
+Read AGENTS.md and PORTING.md. Work in my own copy, verify the airport
+details and data coverage, and create its airport pack and day/night artwork.
+Keep the free defaults. Don't change my other projects or deploy it online.
+Run and test it locally, open it in my browser, and explain anything unfinished.
 ```
 
-Do not add `--volumes` if you want to retain data. For Internet access, configure your own HTTPS reverse proxy. The default port binds only to your machine. This is a Node server, not a static GitHub Pages site.
+The agent's instructions are in [AGENTS.md](AGENTS.md). AEP already includes the artwork; another airport needs its own images. If the agent can't generate images, it should help you prepare them and say what's missing. An agent doesn't replace a server: your computer or host must stay running for the app to stay available.
+
+## Or run AEP yourself
+
+1. Install **Git** and **Docker with Compose v2.24 or newer**, and start Docker.
+2. Open a terminal and paste:
+
+   ```sh
+   git clone https://github.com/jpemberthy/airport-window.git
+   cd airport-window
+   docker compose up --build -d --wait
+   ```
+
+3. When the command finishes, open **http://localhost:3000**. The first build can take a few minutes. Click **Play ambience** to hear sound.
+
+No API key, paid flight-data account, or configuration file setup is needed. Leave Docker running while you use it. If a step fails, give your coding agent the error and the prompt above.
+
+Run these from the same `airport-window` folder:
+
+```sh
+docker compose down       # stop; keep your saved data
+docker compose up -d       # start again
+docker compose logs -f    # see what is happening; Ctrl+C exits the logs
+```
+
+The database lives in a persistent Docker volume. Setup and cleanup are automatic. Do not add `--volumes` to the stop command: that deletes your saved data. This quickstart runs on your own computer; it does not publish a website. For your own domain/server, see [operations](docs/OPERATIONS.md).
+
+![Aeroparque at night](public/airports/aep/approach-night.webp)
+
+## For developers
 
 **Native development:** Node 22 LTS (22.13+) or Node 24 LTS, then `npm ci` and `npm run dev`. Open the printed localhost URL. SQLite initializes automatically in ignored `data/`. `/airport-lab` previews your selected pack with synthetic weather and no feed requests. Development labs are unavailable in production.
 
@@ -70,5 +106,7 @@ The regression suite exercises the Boston reference pack. Additional pack tests 
 The release has a documented [upstream dependency audit limitation](docs/VERIFICATION.md#dependency-audit-limitation); operators should review it before publishing an Internet-facing instance.
 
 Original code and authored artwork are offered under [MIT](LICENSE); third-party geography and dependency terms remain separate. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [artwork instructions](docs/ARTWORK.md).
+
+This is an independent source release derived from [LoganWatch](https://loganwatch.com), by [Juan Pemberthy](https://juan.pemberthy.com). It has no connection to LoganWatch's deployment, databases, credentials or update process. LoganWatch's ongoing development does not imply updates to this snapshot.
 
 For enjoyment, not navigation.
