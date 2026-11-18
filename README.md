@@ -2,6 +2,10 @@
 
 A pixel-art window onto your local airport. Live aircraft, weather, day/night illustrations, a small globe, and ambience. You run it on your own computer or server.
 
+Born at **[LoganWatch](https://loganwatch.com)**, my little window onto Boston Logan. I live next to the airport and hear planes every day, so I figured I might as well know who's making the noise. [Here's the original post](https://x.com/jpemberthy/status/2115145924880068690). This kit grew out of that project so anyone can try the same idea at their own airport. Same curiosity, different runway.
+
+I plan to keep tinkering with [loganwatch.com](https://loganwatch.com) as time allows—no roadmap or promises. Keep an eye there for the latest version of my Boston project. **This repository is an independent snapshot:** LoganWatch and your copy evolve separately, with no automatic updates between them.
+
 **Unmaintained v1 release.** Shared for independent use and adaptation. No support, issue triage, pull-request reviews, or future updates are promised. Fork it and make it your own. Operators maintain and pay for their own installations.
 
 **Aeroparque Jorge Newbery (AEP / SABE), Buenos Aires, is ready to run.** Ten original AEP illustrations cover approach, landing, taxi, takeoff and climb, by day and night. Boston Logan is included as a reference airport pack, including its optional registered harbor illustration.
@@ -61,6 +65,26 @@ The database lives in a persistent Docker volume. Setup and cleanup are automati
 
 ![Aeroparque at night](public/airports/aep/approach-night.webp)
 
+## Want LoganWatch's extra flight details and tower radio?
+
+The Boston project includes two optional extras:
+
+- **Flight details from [Flightradar24](https://fr24api.flightradar24.com/docs/getting-started).** The free feeds supply positions and callsigns; the paid API adds matched flight numbers and origin/destination details when available. You need your own API account, permissions and budget. A regular Flightradar24 app subscription is separate from API access.
+- **Boston Logan tower radio via [LiveATC](https://www.liveatc.net/hlisten.php?mount=kbos1_twr&icao=kbos).** This is a real radio stream, separate from the app's generated ambience. Another airport needs its own available, permitted stream; don't reuse Boston's audio for it.
+
+**AEP starts with both extras off.** Live flights, weather and ambience work without them. The Boston reference pack retains its tower configuration. Agents can follow the [optional-feature instructions](docs/OPERATIONS.md#optional-paid-route-enrichment) to investigate and configure these for your airport.
+
+If you want those extras, give your agent this follow-up:
+
+```text
+Check whether Flightradar24 flight details and tower radio are available
+for my selected airport. Read AGENTS.md and docs/OPERATIONS.md.
+Explain what accounts, permissions, costs and radio source I would need.
+Don't enable paid requests until we've agreed on my budget.
+Use my airport's own radio feed, or leave tower audio off if none is suitable.
+Once configured, test it and tell me what works and what is unavailable.
+```
+
 ## For developers
 
 **Native development:** Node 22 LTS (22.13+) or Node 24 LTS, then `npm ci` and `npm run dev`. Open the printed localhost URL. SQLite initializes automatically in ignored `data/`. `/airport-lab` previews your selected pack with synthetic weather and no feed requests. Development labs are unavailable in production.
@@ -107,6 +131,6 @@ The release has a documented [upstream dependency audit limitation](docs/VERIFIC
 
 Original code and authored artwork are offered under [MIT](LICENSE); third-party geography and dependency terms remain separate. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) and [artwork instructions](docs/ARTWORK.md).
 
-This is an independent source release derived from [LoganWatch](https://loganwatch.com), by [Juan Pemberthy](https://juan.pemberthy.com). It has no connection to LoganWatch's deployment, databases, credentials or update process. LoganWatch's ongoing development does not imply updates to this snapshot.
+Created by [Juan Pemberthy](https://juan.pemberthy.com), from [LoganWatch](https://loganwatch.com). This kit uses none of LoganWatch's deployment, databases or credentials.
 
 For enjoyment, not navigation.

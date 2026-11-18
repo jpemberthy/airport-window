@@ -55,9 +55,9 @@ Configure your own domain and HTTPS proxy if publishing. Don't point a fork at L
 
 ## Optional features
 
-**Tower radio:** add `tower: {streamUrl, playerUrl, label}` only when you have a permitted, browser-compatible public HTTPS audio stream for the selected airport. URLs are public and must contain no credentials. Test CORS/playback from your domain. Leave it absent when unsure; ambience works independently.
+**Tower radio:** follow the [airport-specific radio checklist](docs/OPERATIONS.md#optional-tower-radio), then add `tower: {streamUrl, playerUrl, label}` only when you have a permitted, browser-compatible public HTTPS audio stream for the selected airport. URLs are public and must contain no credentials. Test playback from your domain. Leave it absent when unsure; ambience works independently. Boston's LiveATC configuration is a reference, not a feed to reuse for your airport.
 
-**Paid routes:** follow [OPERATIONS.md](docs/OPERATIONS.md). Matching and pacing use the selected airport/time zone. Do not reuse a single paid token across independently budgeted installations without coordinating their total allowance.
+**Paid routes:** follow the [FR24 setup and agent checklist](docs/OPERATIONS.md#optional-paid-route-enrichment). Flight numbers and origin/destination enrichment are separate from the free live positions. Matching and pacing use the selected airport/time zone. Do not reuse a single paid token across independently budgeted installations without coordinating their total allowance.
 
 **Registered map (advanced):** optional and unrelated to basic portability. The `AirportMap` interface in `airports/types.ts` accepts image dimensions, projection, geographic origin, runway endpoints and corresponding image points, stationary anchors, taxi lanes and day/night/sprite assets. `airports/boston/map.ts` is a complete reference. You must draw and calibrate your own geometry; changing only coordinates is insufficient. Check forward/inverse registration, runway bearings, taxi alignment and motion on the artwork before enabling it. Retain applicable data attribution.
 

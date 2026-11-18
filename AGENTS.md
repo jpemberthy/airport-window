@@ -33,6 +33,17 @@ No API keys or `.env` are required for the base app. Don't turn on paid routes t
 5. Omit `tower` and `map` unless the operator has usable, permitted assets. No map is needed for a complete airport. Basic scenery is illustrative, not geographic registration. Keep paid enrichment off unless explicitly requested and configured with the operator's own permissions, token and budget.
 6. Use a separate database/volume for the new airport. For Docker, choose a distinct Compose project name; for native Node, set a distinct `AIRPORT_DATABASE_PATH`. Never erase a database or paid-data ledger to get past an airport-mismatch error. Never run `docker compose down --volumes` as a routine troubleshooting step.
 
+## Optional flight details and tower radio
+
+LoganWatch's Boston setup uses Flightradar24 route enrichment and a LiveATC Boston tower stream. The free position feeds and local callsign-to-airline mapping work independently of FR24. Generated ambience is also independent of radio. Explain those differences; do not imply that paying guarantees a match for every aircraft or that every airport has a tower feed.
+
+If the operator requests these extras, follow the airport-specific checklists in `docs/OPERATIONS.md`:
+
+- **FR24:** confirm the selected airport and the operator's API access, display/cache permission, billing period and credit limits. API access is separate from a consumer Flightradar24 subscription. Keep credentials server-only in the operator's ignored `.env`. Do not enable paid requests or spend credits until the operator authorizes the budget. Use the existing adapter: airport matching and local-time pacing already follow the pack. Run only a bounded live check on a freshly observed flight; report missing matches honestly. Do not bypass matching, permission flags or budget limits to make a card look complete.
+- **Tower:** find and verify a permitted browser-playable HTTPS stream for this specific airport, plus its provider's player page. Listen to establish the actual channel (tower, ground, approach or combined), and label it accurately. Never construct a feed by replacing `kbos` in Boston's URL. Put the public URLs and label in this airport's `tower` configuration, never credentials. Test user-started playback, stopping, mobile behavior, failure fallback and ambience alongside it. If no suitable feed is available, omit `tower` and say so; don't substitute another airport or invent controller audio.
+
+Record the provider/source, airport or channel, date checked, what was verified, and any ongoing operator costs or manual steps. A working local stream does not establish permission to embed it. Preserve the README's link and credit to LoganWatch and the relevant provider notices when adapting a pack.
+
 ## Verify changes honestly
 
 For an airport pack or application change, run:
