@@ -19,6 +19,8 @@ AIRPORT_PORT=4318 docker compose -p airport-window-mde up --build -d --wait
 
 Open **http://localhost:4318**. Click **Play ambience** for sound. Keep Docker running. These commands use a separate MDE database volume and can run alongside AEP on another port.
 
+**Map mode:** open **http://localhost:4318/?mode=tv&view=map**, or enter TV mode and click **Show airport map**. It opens once fresh positions and the map artwork are ready. [Map sources and artwork](MAP.md).
+
 ```sh
 docker compose -p airport-window-mde stop      # keep the container and saved data
 docker compose -p airport-window-mde start     # start the same MDE build again
@@ -30,7 +32,9 @@ docker compose -p airport-window-mde start     # start the same MDE build again
 
 Ten original Rionegro-inspired illustrations: approach, landing, taxi, takeoff and climb, each by day and night. Free live positions, SKRG weather, local daylight, nearby mode, globe and synthesized ambience use the existing application. No runtime-core changes are required.
 
-There is **no registered runway map or tower stream** in this pack; their controls stay hidden. The flight scenes are illustrative and do not plot aircraft over measured geography. Paid Flightradar24 enrichment remains off by default. The guide in [PORTING.md](../../PORTING.md#optional-features) describes how an operator can add those optional features later.
+The separate **airport map** aligns reported aircraft with runway 01/19, the parallel taxiway, apron and curved terminal. It has matching day/night artwork and the existing weather effects. Traffic outside the current view is counted separately; sparse ground reception may leave the map quiet even when aircraft are reported in the wider region. The ten flight scenes remain available as before.
+
+There is **no tower stream** configured, so its controls stay hidden. Paid Flightradar24 enrichment remains off by default. The guide in [PORTING.md](../../PORTING.md#optional-features) describes how an operator can add those optional features later.
 
 ## Airport metadata
 
@@ -51,4 +55,4 @@ The scene bearing is an artistic westward viewing direction, not an approach pro
 
 ## Artwork
 
-Original WebP assets are in `public/airports/mde/`. The full prompts and generation process are in [ARTWORK.md](ARTWORK.md). No other airport's scenery is reused as MDE's artwork.
+Original scene WebPs are in `public/airports/mde/`, with map assets in its `map/` subfolder. Scene prompts are in [ARTWORK.md](ARTWORK.md); map prompts, geographic sources and reproduction steps are in [MAP.md](MAP.md). No other airport's scenery is reused as MDE's artwork.

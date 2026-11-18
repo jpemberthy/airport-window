@@ -26,7 +26,7 @@ No API keys or `.env` are required for the base app. Don't turn on paid routes t
 
 ## If the person wants another airport
 
-First check the included packs. **MDE / SKRG** is José María Córdova in Rionegro serving Medellín, not EOH / SKMD. Its artwork is complete: follow `airports/mde/README.md`, select the pack and run it with its own volume. Do not regenerate its scenes or add a map/radio just to launch it. Boston is also included as a reference. The steps below apply to a new pack.
+First check the included packs. **MDE / SKRG** is José María Córdova in Rionegro serving Medellín, not EOH / SKMD. Its scenes and registered map are complete: follow `airports/mde/README.md`, select the pack and run it with its own volume. Do not regenerate its artwork or add radio just to launch it. Boston is also included as a reference. The steps below apply to a new pack.
 
 1. Resolve the airport name/code unambiguously. Look up authoritative identifiers, coordinates, elevation, METAR station and IANA time zone. Record sources; don't guess or treat the template's placeholders as real data.
 2. Copy `airports/template` into a new pack. Configure identifiers, branding, coordinates, elevation in feet, radius in nautical miles, weather station, time zone and scene bearing. Select it in `airport.config.ts`. One installation serves one airport. Keep ordinary airport-specific changes in its pack and artwork, not in application components or provider code.

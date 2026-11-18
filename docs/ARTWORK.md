@@ -36,3 +36,5 @@ Classic scenes are complete opaque illustrations. Boston's advanced layered mode
 ## AEP airport map
 
 AEP also includes separate day/night map artwork registered to its runway and taxiways. The [map walkthrough](../airports/aep/MAP.md) contains its OpenStreetMap source, reproducible drawing guide, exact built-in image-generation prompts and registration checks. These are two additional assets; the ten flight-phase scenes remain unchanged. No aircraft are painted into the maps: the app overlays reported traffic.
+
+MDE's [map walkthrough](../airports/mde/MAP.md) follows the same process for its inland runway, curved terminal and surrounding green plateau. Its source and authoring script are separate from AEP's; the renderer is shared.

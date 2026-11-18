@@ -1,4 +1,5 @@
 import { defineAirport } from '../types';
+import { mdeMap } from './map';
 
 // José María Córdova serves Medellín from Rionegro, not the city's EOH airport.
 // Metadata sources and artwork provenance: ./README.md.
@@ -16,6 +17,7 @@ export const mde = defineAirport({
   timeZone: 'America/Bogota',
   sceneBearing: 270,
   sceneStyle: 'classic',
+  map: mdeMap,
   brand: {
     title: 'Medellín Watch',
     wordmark: 'MEDELLÍN',

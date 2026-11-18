@@ -10,7 +10,7 @@ I plan to keep tinkering with [loganwatch.com](https://loganwatch.com) as time a
 
 **Aeroparque Jorge Newbery (AEP / SABE), Buenos Aires, is ready to run.** Ten original AEP illustrations cover approach, landing, taxi, takeoff and climb, by day and night. AEP also includes a day/night airport map with live aircraft over its coastal runway, terminal and the Río de la Plata. Boston Logan is included as a reference pack with its harbor map.
 
-**Medellín is included too:** José María Córdova (MDE / SKRG) in Rionegro has its own ten day/night flight scenes. [Run MDE](airports/mde/README.md). It uses the same app, with no map or tower stream configured. AEP remains the default.
+**Medellín is included too:** José María Córdova (MDE / SKRG) in Rionegro has its own ten day/night flight scenes and a registered airport map. [Run MDE](airports/mde/README.md). It uses the same app; tower radio remains unconfigured. AEP remains the default.
 
 ## Easiest: hand it to your coding agent
 
@@ -127,7 +127,7 @@ Run `npm run check:pack` to validate local artwork. Add `-- --live` for a small,
 - Daylight follows the airport location. Nearby and flight-phase altitude thresholds use approximate height above airport elevation; displayed flight altitude remains the reported altitude.
 - Flight phases are inferences from movement, not confirmed schedules. Nearby aircraft may be serving another airport or just passing through. Missing or stale data is shown honestly.
 - Optional Flightradar24 origin/destination enrichment is **off**. Without it, live flights still work and unknown routes stay absent. Your own credentials, permissions and budgets are required to enable it.
-- AEP includes an illustrated map registered to its runway and taxiways. It appears in TV mode or via **Show airport map**; aircraft outside the view are counted separately. Tower audio remains unconfigured. Other packs can omit the map and keep flight scenes only. All art is illustrative, not navigation data.
+- AEP and MDE include illustrated maps registered to their runways and taxiways. They appear in TV mode or via **Show airport map**; aircraft outside the view are counted separately. Tower audio remains unconfigured for these packs. Other packs can omit the map and keep flight scenes only. All art is illustrative, not navigation data.
 - English UI, feet/knots and Fahrenheit are the v1 defaults. Audio begins only after a user gesture; radio may have quiet gaps or fail independently.
 
 ## Check your fork

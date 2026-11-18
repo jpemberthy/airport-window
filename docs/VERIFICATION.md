@@ -2,6 +2,17 @@
 
 The initial v1.0 handoff was checked on November 17, 2026; the AEP map and MDE revisions were checked on November 18. These checks describe the snapshots, not a commitment to maintain them or a guarantee of future feed coverage.
 
+## v1.3 MDE map — November 18, 2026
+
+- MDE now includes a registered day/night airport map, with runway 01/19, the curved terminal, aprons and 101 taxiway/taxilane polylines. The [map walkthrough](../airports/mde/MAP.md) records sources, exact image prompts, licensing and reproduction steps. The editable OSM source, SVG scaffold and authoring script are included.
+- **No shared runtime changes** from v1.2.0: `app/`, `components/`, `lib/`, `db/` and `scripts/` remain identical. MDE's `map` configuration enables the existing renderer and controls. AEP remains the committed default; the running MDE container is built separately.
+- **333 unit/integration tests across 40 files** passed, plus lint, typecheck and asset validation. AEP and MDE share the registered-map test suite, covering non-folding meshes, runway alignment, geographic round trips, source taxiway agreement within 0.01 image pixels, high-elevation surface matching and outside/stale traffic. These numerical checks are distinct from visual artwork alignment.
+- The geographic runway and taxiway paths were overlaid on the day painting for visual review. Both delivered WebPs are 1672×941. Day/night, phone/desktop and adverse-weather screenshots were reviewed. The pack's map/scaffold generator reproduces its outputs byte-for-byte after formatting.
+- **13 MDE Playwright scenarios passed**, with the mapless-only scenario skipped. Map cases cover 320px, 390px and 1440px in day/night, rain, fog and snow, along with direct-map links and missing-map-art fallback. The flight scenes, clock, globe, ambience, unavailable feeds and production endpoint checks still pass.
+- MDE's Docker production build starts healthy on its existing volume; no database reset or paid requests were needed. AEP's native standalone production build and selected-pack asset check passed after restoring the default selector.
+- A live browser check opened map mode with fresh traffic and SKRG weather and no browser errors. That snapshot had five aircraft outside the visible airport area and none in view; synthetic browser fixtures separately verify drawing an aircraft on the map. Sparse ground reception is a coverage limitation, not evidence that the airport is empty.
+- AEP's separate local container remains healthy. The original LoganWatch HEAD, branch, Git status and all 266 tracked-file hashes remain unchanged. Dependency versions are unchanged; the audit limitation below records the earlier check.
+
 ## v1.2 MDE portability check — November 18, 2026
 
 - Added **MDE / SKRG**, José María Córdova in Rionegro serving Medellín, with a 7,024 ft airport elevation, `America/Bogota` time zone, verified airport metadata and ten original day/night illustrations. [Pack, sources and run instructions](../airports/mde/README.md); [full artwork prompts](../airports/mde/ARTWORK.md).

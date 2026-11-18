@@ -46,4 +46,4 @@ Use case: lighting-weather. Edit target: the supplied MDE approach-day illustrat
 4. Select MDE in `airport.config.ts`. Use `/airport-lab` in development to review day, dusk and night with clear, rain, fog, snow and unavailable weather. The browser suite also covers MDE at phone and desktop sizes against its production build; fixtures are synthetic.
 5. Check lower-left text contrast, phone cropping, aircraft visibility and day/night geometry. Source art contains no rain/cloud/fog layers; the app provides them. Snow is a renderer stress test, not a claim about Rionegro weather.
 
-Adding a registered live map would require separate source geometry, calibration and map artwork. These ten scenes deliberately make no geographic-registration claim.
+MDE also includes a separate [registered airport map](MAP.md), with its own source geometry, calibration and two map illustrations. These ten flight scenes deliberately make no geographic-registration claim.
